@@ -664,7 +664,7 @@ void setup()
         }
     }
 #endif
-    xTaskCreatePinnedToCore(scanTask, "scanTask", 6000, nullptr, 1, &scannerTask, 1);
+    xTaskCreatePinnedToCore(scanTask, "scanTask", 6500, nullptr, 1, &scannerTask, 1);
     configureOTA();
 }
 
