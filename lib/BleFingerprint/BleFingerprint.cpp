@@ -429,7 +429,7 @@ bool BleFingerprint::query()
     if (rssi < -90) return false;
     auto now = millis();
 
-    if (now - lastSeenMillis > 2) return false;
+    if (now - lastSeenMillis > 3) return false;
 
     if (now - lastQryMillis < qryDelayMillis) return false;
     didQuery = true;
@@ -442,7 +442,8 @@ bool BleFingerprint::query()
     NimBLEClient *pClient = NimBLEDevice::getClientListSize() ? NimBLEDevice::getClientByPeerAddress(address) : nullptr;
     if (!pClient) pClient = NimBLEDevice::getDisconnectedClient();
     if (!pClient) pClient = NimBLEDevice::createClient();
-    pClient->setConnectTimeout(5);
+    pClient->setConnectionParams(12, 12, 0, 200, 32, 32);
+    pClient->setConnectTimeout(2);
     if (pClient->connect(address))
     {
         bool iphone = true;

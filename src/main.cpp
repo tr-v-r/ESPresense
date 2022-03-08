@@ -467,6 +467,8 @@ void reportTask(void *parameter)
 void scanTask(void *parameter)
 {
     BLEDevice::init(Stdprintf("ESPresense-%06" PRIx64, ESP.getEfuseMac() >> 24));
+    Serial.printf("BTLE Scanning started from %s\n", BLEDevice::getAddress().toString().c_str());
+
     for (esp_ble_power_type_t i = ESP_BLE_PWR_TYPE_CONN_HDL0; i <= ESP_BLE_PWR_TYPE_CONN_HDL8; i = esp_ble_power_type_t((int)i + 1))
         NimBLEDevice::setPower(ESP_PWR_LVL_P9, i);
     NimBLEDevice::setSecurityAuth(false, false, false);
@@ -475,7 +477,7 @@ void scanTask(void *parameter)
     pBLEScan->setInterval(BLE_SCAN_INTERVAL);
     pBLEScan->setWindow(BLE_SCAN_WINDOW);
     pBLEScan->setAdvertisedDeviceCallbacks(&fingerprints, true);
-    if (activeScan) pBLEScan->setActiveScan(true);
+    pBLEScan->setActiveScan(activeScan);
     pBLEScan->setDuplicateFilter(false);
     pBLEScan->setMaxResults(0xFF);
     if (!pBLEScan->start(0, nullptr, false))
