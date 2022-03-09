@@ -499,7 +499,7 @@ void scanTask(void *parameter)
         }
         else
         {
-            delay(500);
+            delay(100);
         }
     }
 }
