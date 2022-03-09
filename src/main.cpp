@@ -471,7 +471,9 @@ void scanTask(void *parameter)
 
     for (esp_ble_power_type_t i = ESP_BLE_PWR_TYPE_CONN_HDL0; i <= ESP_BLE_PWR_TYPE_CONN_HDL8; i = esp_ble_power_type_t((int)i + 1))
         NimBLEDevice::setPower(ESP_PWR_LVL_P9, i);
-    NimBLEDevice::setSecurityAuth(false, false, false);
+    NimBLEDevice::setSecurityAuth(true, true, true);
+    NimBLEDevice::setSecurityRespKey(BLE_SM_PAIR_KEY_DIST_ENC | BLE_SM_PAIR_KEY_DIST_ID);
+    NimBLEDevice::setMTU(255);
 
     auto pBLEScan = BLEDevice::getScan();
     pBLEScan->setInterval(BLE_SCAN_INTERVAL);
